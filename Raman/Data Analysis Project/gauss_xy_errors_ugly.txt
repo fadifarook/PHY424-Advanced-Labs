@@ -1,0 +1,46 @@
+# gauss_xy_errors_ugly.dat
+#  
+# Rather ugly data generated from
+#    background = 89     # constant background
+#    y_peak     = 462     # peak height above background
+#    mean       = 1173.24 # central values
+#    sigma      = 0.2     # standard deviations
+#    def function(x) :
+#        return background + y_peak*numpy.exp(-(x-mean)**2/(2*sigma**2))
+# With data smeared by x and y uncertainties as listed below.
+#
+# Generated 23 September 2011 
+#   by David Bailey http://www.physics.utoronto.ca/~dbailey/
+# Released under the MIT License (www.opensource.org/licenses/mit-license.php)
+#
+#     x       dx         y      dy
+ 1170.86      0.2  89.7725  9.43398
+  1171.3      0.2  88.4583  9.43398
+ 1171.35      0.2  90.4782  9.43398
+ 1171.73      0.2  85.9701  9.43398
+ 1171.76      0.2  93.6268  9.43398
+ 1171.94      0.2  97.8455  9.43398
+ 1171.85      0.2    88.63  9.43398
+ 1172.01      0.2  98.3948  9.43398
+ 1172.14      0.2   105.13  9.43398
+ 1172.42      0.2  91.5768  9.43398
+ 1172.78      0.2  95.4021  9.48683
+ 1172.93      0.2  86.0097  10.0995
+ 1172.85      0.2   133.13  12.2882
+ 1173.14      0.2  241.938  16.6733
+ 1173.16      0.2  454.989  21.4009
+ 1173.02      0.2  536.594  23.4734
+  1173.5      0.2  478.401  21.4009
+ 1173.08      0.2  307.473  16.6733
+ 1173.22      0.2  122.405  12.2882
+ 1173.61      0.2  108.968  10.0995
+ 1173.75      0.2  75.2665  9.48683
+ 1173.62      0.2  79.3908  9.43398
+ 1173.76      0.2   86.892  9.43398
+ 1174.77      0.2  91.8404  9.43398
+ 1174.32      0.2  99.8793  9.43398
+ 1174.66      0.2  77.4609  9.43398
+  1174.4      0.2  84.3398  9.43398
+ 1174.53      0.2  99.7386  9.43398
+ 1175.17      0.2  87.1177  9.43398
+ 1175.33      0.2  71.9588  9.43398
