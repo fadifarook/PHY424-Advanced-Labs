@@ -2,8 +2,20 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 
+filename = "data.csv"
+# filename = "thickdata.csv"
+
+if filename == "data.csv":
+    rows = 5
+    # Initial guesses for f, fp, bp
+    initial_guesses = [17, 0.1, 0.1]
+else:
+    rows = 3
+    initial_guesses = [5, 0.1, 0.1]
+
+
 # Load the CSV data
-data = np.genfromtxt("data.csv", delimiter=",", skip_header=1)
+data = np.genfromtxt(filename, delimiter=",", skip_header=1)
 
 # Parameters (replace with actual values when known)
 l = 3 * 2  # Offset
@@ -24,8 +36,8 @@ print(f"Focus is {f} cm +- {np.std(f_array)} cm")
 a = np.array([28.8, 28.5, 28.45, 28.8, 28.5, 28.75])
 print(np.mean(a), np.std(a))
 
-# Calculate mean and standard deviation for every 5 lines
-num_measurements = len(o_data) // 5
+# Calculate mean and standard deviation for every <rows> lines
+num_measurements = len(o_data) // rows
 p_means = []
 p_stds = []
 q_means = []
@@ -36,10 +48,10 @@ q_from_M_means = []
 q_from_M_stds = []
 
 for i in range(num_measurements):
-    # Extract every 5 rows for each measurement
-    o_subset = o_data[i * 5 : (i + 1) * 5]
-    i_subset = i_data[i * 5 : (i + 1) * 5]
-    M_subset = M_data[i * 5 : (i + 1) * 5]
+    # Extract every <rows> rows for each measurement
+    o_subset = o_data[i * rows : (i + 1) * rows]
+    i_subset = i_data[i * rows : (i + 1) * rows]
+    M_subset = M_data[i * rows : (i + 1) * rows]
 
     # Calculate mean and std for o, i, and M
     o_mean = np.mean(o_subset)
@@ -82,12 +94,9 @@ def modified_thin_lens(p, f, fp, bp):
     return (p - fp) * f / (p - fp - f) + bp  # since fp = bp here
 
 
-# Initial guesses for f, fp, bp
-initial_guesses = [17, 0.1, 0.1]
-
 # Bounds for f, fp, and bp
-lower_bounds = [10, 0.01, 0.01]  # Set lower bounds for f, fp, bp
-upper_bounds = [25, 0.2, 0.2]  # Set upper bounds for f, fp, bp
+lower_bounds = [initial_guesses[0] - 5, 0.01, 0.01]  # Set lower bounds for f, fp, bp
+upper_bounds = [initial_guesses[0] + 5, 0.2, 0.2]  # Set upper bounds for f, fp, bp
 
 # Fit the modified thin lens equation to the data
 params, covariance = curve_fit(
