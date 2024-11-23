@@ -3,22 +3,26 @@ import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 
 filename = "data.csv"
-# filename = "thickdata.csv"
+filename = "thickdata.csv"
 
 if filename == "data.csv":
     rows = 5
     # Initial guesses for f, fp, bp
     initial_guesses = [17, 0.1, 0.1]
+    upper_bounds = [initial_guesses[0] + 5, 0.1, 0.1]  # Set upper bounds for f, fp, bp
 else:
     rows = 3
-    initial_guesses = [5, 0.1, 0.1]
+    initial_guesses = [5, 0.2, 0.1]
+    upper_bounds = [initial_guesses[0] + 5, 0.2, 0.2]  # Set upper bounds for f, fp, bp
 
 
 # Load the CSV data
 data = np.genfromtxt(filename, delimiter=",", skip_header=1)
 
 # Parameters (replace with actual values when known)
-l = 3 * 2  # Offset
+lobj = 5.9995
+limg = 5.991
+# l = 3 * 2  # Offset
 f = 15.1 + 2  # Focal length
 # f = 16.5
 
@@ -62,8 +66,8 @@ for i in range(num_measurements):
     M_std = np.std(M_subset, ddof=1)  # Sample standard deviation
 
     # Calculate p and q with uncertainties
-    p = abs(o_mean + l)
-    q = abs(i_mean + l)
+    p = abs(o_mean + lobj)
+    q = abs(i_mean + limg)
 
     # Store p and q with their uncertainties
     p_means.append(p)
@@ -96,7 +100,6 @@ def modified_thin_lens(p, f, fp, bp):
 
 # Bounds for f, fp, and bp
 lower_bounds = [initial_guesses[0] - 5, 0.01, 0.01]  # Set lower bounds for f, fp, bp
-upper_bounds = [initial_guesses[0] + 5, 0.2, 0.2]  # Set upper bounds for f, fp, bp
 
 # Fit the modified thin lens equation to the data
 params, covariance = curve_fit(
@@ -142,9 +145,10 @@ q_fitted = modified_thin_lens(p_range, f_fit, fp_fit, bp_fit)
 plt.plot(
     p_range,
     q_fitted,
-    label=f"Fitted (f={f_fit:.2f}, fp={fp_fit:.2f}, bp={bp_fit:.2f})",
+    label=f"Fitted (f={f_fit:.2f}, fp={(fp_fit+bp_fit)/2:.2f}, bp={(fp_fit+bp_fit)/2:.2f})",
     color="blue",
 )
+
 
 # Labels and legend
 plt.xlabel("p (object distance) [cm]")
