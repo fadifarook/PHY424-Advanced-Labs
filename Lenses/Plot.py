@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 
 filename = "data.csv"
-filename = "thickdata.csv"
+# filename = "thickdata.csv"
 
 if filename == "data.csv":
     rows = 5
@@ -20,8 +20,8 @@ else:
 data = np.genfromtxt(filename, delimiter=",", skip_header=1)
 
 # Parameters (replace with actual values when known)
-lobj = 5.9995
-limg = 5.991
+lobj = 5.99 - 0.03
+limg = lobj
 # l = 3 * 2  # Offset
 f = 15.1 + 2  # Focal length
 # f = 16.5
@@ -117,6 +117,7 @@ f_std, fp_std, bp_std = np.sqrt(np.diag(covariance))
 print(f"Estimated f: {f_fit} ± {f_std} cm")
 print(f"Estimated fp: {fp_fit} ± {fp_std} cm")
 print(f"Estimated bp: {bp_fit} ± {bp_std} cm")
+print(f"fp and bp: {(fp_fit+bp_fit)/2} +- {0.5*np.sqrt(fp_std**2 + bp_std**2)} cm")
 
 # Plot q vs. p with error bars for experimental data
 plt.errorbar(
