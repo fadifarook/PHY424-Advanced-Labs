@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 
 filename = "data.csv"
-# filename = "thickdata.csv"
+filename = "thickdata.csv"
 
 if filename == "data.csv":
     rows = 5
@@ -123,9 +123,9 @@ print(f"Estimated f: {f_fit} ± {f_std} cm")
 print(f"fp and bp: {(fp_fit+bp_fit)/2} +- {0.5*np.sqrt(fp_std**2 + bp_std**2)} cm")
 print("Chi Squares:", chisq)
 
-# Create a figure with two subplots sharing the x-axis
+# Create a figure with two subplots (stacked)
 fig, (ax, ax_res) = plt.subplots(
-    2, 1, figsize=(8, 10), gridspec_kw={"height_ratios": [2, 1]}, sharex=True
+    2, 1, figsize=(8, 10), gridspec_kw={"height_ratios": [2, 1]}
 )
 
 # Plot q vs. p with error bars for experimental data
@@ -167,6 +167,7 @@ ax.text(
 )
 
 # Labels and legend
+ax.set_xlabel("p (object distance) [cm]")
 ax.set_ylabel("q (image distance) [cm]")
 ax.set_title("Comparison of Experimental, Theoretical, and Fitted q vs. p")
 ax.legend()
